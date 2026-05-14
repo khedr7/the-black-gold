@@ -794,8 +794,8 @@
         <div class="badge" style="bottom:10%;inset-inline-end:6%">
           AUDI · VW · SEAT · ŠKODA
         </div>
-        <div class="badge" style="top:44%;inset-inline-end:-4%;background:rgba(31,170,84,.15);border-color:rgba(31,170,84,.4);color:#9beaba">
-          متاحون الآن
+        <div class="badge" id="avail-badge" style="top:44%;inset-inline-end:-4%;background:rgba(31,170,84,.15);border-color:rgba(31,170,84,.4);color:#9beaba">
+          <span id="avail-dot" class="dt"></span><span id="avail-text">متاحون الآن</span>
         </div>
       </div>
     </div>
@@ -1305,6 +1305,36 @@
     entries.forEach(e=>{ if(e.isIntersecting) setActive(e.target.id); });
   }, {rootMargin:'-38% 0px -52% 0px'});
   sections.forEach(s=>sio.observe(s));
+})();
+
+/* ── Availability badge (Syria time UTC+3, no DST) ── */
+(function(){
+  const badge = document.getElementById('avail-badge');
+  const dot   = document.getElementById('avail-dot');
+  const text  = document.getElementById('avail-text');
+  if(!badge) return;
+
+  function update(){
+    const syria = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Damascus'}));
+    const day  = syria.getDay();                        // 0=Sun … 5=Fri … 6=Sat
+    const mins = syria.getHours()*60 + syria.getMinutes();
+    const open = day !== 5 && mins >= 9*60 && mins < 19*60;
+
+    if(open){
+      badge.style.cssText += ';background:rgba(31,170,84,.15);border-color:rgba(31,170,84,.4);color:#9beaba';
+      dot.style.background = '#2bc566';
+      dot.style.boxShadow  = '0 0 8px #2bc566';
+      text.textContent = 'متاحون الآن';
+    } else {
+      badge.style.cssText += ';background:rgba(220,38,38,.12);border-color:rgba(220,38,38,.35);color:#fca5a5';
+      dot.style.background = '#ef4444';
+      dot.style.boxShadow  = '0 0 8px rgba(239,68,68,.6)';
+      text.textContent = day === 5 ? 'مغلق · الجمعة' : 'مغلق حالياً';
+    }
+  }
+
+  update();
+  setInterval(update, 60000);
 })();
 
 /* ── Service Worker ── */
