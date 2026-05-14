@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0d0c0a"/>
+  <!-- outer ring -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="#d4af37" stroke-width="14"/>
+  <!-- inner ring -->
+  <circle cx="256" cy="256" r="170" fill="none" stroke="#a8842a" stroke-width="5"/>
+  <!-- Arabic letter ذ representing الذهب -->
+  <text
+    x="256" y="318"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="200"
+    font-weight="bold"
+    fill="url(#g)"
+  >ذ</text>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#f5e08a"/>
+      <stop offset="50%"  stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#a8842a"/>
+    </linearGradient>
+  </defs>
+</svg>
